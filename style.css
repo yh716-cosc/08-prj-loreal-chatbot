@@ -50,8 +50,9 @@ body {
   font-size: 18px;
   line-height: 1.5;
   overflow-y: auto;
-  background: #fafafa;
-  white-space: pre-line;
+  background: #fff;               /* White background */
+  color: #000;                    /* Black text */
+  border: 2px solid #000;         /* Black border for high contrast */
 }
 
 /* messages */
@@ -78,18 +79,20 @@ body {
 .chat-form input {
   flex: 1;
   padding: 12px;
-  border: 1px solid #ccc;
+  border: 1px solid #E3A535;      /* Gold border */
+  background: #fff;
+  color: #000;
   font-size: 18px;
 }
 
 .chat-form input:focus {
-  outline: 2px solid #000;
+  outline: 2px solid #FF003B;     /* Red focus */
   outline-offset: 2px;
 }
 
 .chat-form button {
   font-size: 18px;
-  background: #000;
+  background: #000;               /* Black button */
   color: #fff;
   border: none;
   padding: 12px;
@@ -107,7 +110,7 @@ body {
 }
 
 .chat-form button:hover {
-  background: #666666;
+  background: #FF003B;            /* Red on hover */
 }
 
 .chat-form button:focus {
@@ -117,33 +120,35 @@ body {
 
 /* User message bubble */
 .user-message {
-  background-color: #e3f2fd; /* Light blue for user */
-  color: #1565c0; /* Dark blue text */
+  background-color: #FF003B;      /* L’Oréal red */
+  color: #fff;                    /* White text for contrast */
   text-align: right;
   margin: 8px 0 8px auto;
   padding: 10px 16px;
   border-radius: 18px 18px 4px 18px;
   max-width: 70%;
-  box-shadow: 0 2px 6px rgba(21, 101, 192, 0.08);
+  box-shadow: 0 2px 6px rgba(255,0,59,0.10);
 }
 
 /* Assistant message bubble */
 .bot-message {
-  background-color: #f5f5f5; /* Light gray for bot */
-  color: #333;
+  background-color: #fff;         /* White for bot */
+  color: #000;                    /* Black text for contrast */
   text-align: left;
   margin: 8px auto 8px 0;
   padding: 10px 16px;
   border-radius: 18px 18px 18px 4px;
   max-width: 70%;
-  box-shadow: 0 2px 6px rgba(51, 51, 51, 0.08);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  border: 1px solid #E3A535;      /* Gold border for L’Oréal branding */
 }
 
 /* Latest question highlight */
 .latest-question {
   font-weight: bold;
-  background: #fffde7;
-  border-left: 4px solid #ffd600;
+  background: #E3A535;            /* L’Oréal gold */
+  color: #000;                    /* Black text for contrast */
+  border-left: 4px solid #FF003B; /* Red accent */
   margin: 12px 0 4px 0;
   padding: 8px 12px;
   border-radius: 8px;
@@ -183,4 +188,10 @@ body {
 
 .site-footer a:hover {
   color: #666666;
+}
+
+.site-header,
+.site-footer {
+  background: #fff;
+  color: #000;
 }
