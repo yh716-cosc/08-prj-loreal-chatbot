@@ -39,6 +39,21 @@ function extractUserName(text) {
   return null;
 }
 
+// Function to show the latest question above the bot's response
+function showLatestQuestion(question) {
+  // Remove any previous latest-question div
+  const oldDiv = document.getElementById("latest-question");
+  if (oldDiv) {
+    oldDiv.remove();
+  }
+  // Create a new div for the latest question
+  const latestDiv = document.createElement("div");
+  latestDiv.id = "latest-question";
+  latestDiv.className = "latest-question";
+  latestDiv.textContent = `You asked: ${question}`;
+  chatWindow.appendChild(latestDiv);
+}
+
 /* Handle form submit */
 chatForm.addEventListener("submit", async function (event) {
   event.preventDefault(); // Prevent page reload
@@ -72,6 +87,9 @@ chatForm.addEventListener("submit", async function (event) {
   // Add user's message to history
   messages.push({ role: "user", content: userText });
 
+  // Show the latest question above the bot's response
+  showLatestQuestion(userText);
+
   // Show loading message
   addMessageToChat("bot", "Thinking...");
 
@@ -81,7 +99,7 @@ chatForm.addEventListener("submit", async function (event) {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${OPENAI_API_KEY}`, // from [secrets.js](http://_vscodecontentref_/3)
+        Authorization: `Bearer ${OPENAI_API_KEY}`, // from secrets.js
       },
       body: JSON.stringify({
         model: "gpt-4o",

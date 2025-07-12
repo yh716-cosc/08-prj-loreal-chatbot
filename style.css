@@ -32,10 +32,10 @@ body {
 
 /* logo */
 .logo-img {
-  display: block;           /* Makes the image a block element */
-  margin: 24px auto 12px;   /* Top, horizontal center, bottom spacing */
-  max-width: 180px;         /* Limits logo size for beginners */
-  padding: 0 12px;          /* Adds horizontal padding */
+  display: block; /* Makes the image a block element */
+  margin: 24px auto 12px; /* Top, horizontal center, bottom spacing */
+  max-width: 180px; /* Limits logo size for beginners */
+  padding: 0 12px; /* Adds horizontal padding */
 }
 
 /* chat window */
@@ -113,6 +113,41 @@ body {
 .chat-form button:focus {
   outline: 2px solid #000;
   outline-offset: 2px;
+}
+
+/* User message bubble */
+.user-message {
+  background-color: #e3f2fd; /* Light blue for user */
+  color: #1565c0; /* Dark blue text */
+  text-align: right;
+  margin: 8px 0 8px auto;
+  padding: 10px 16px;
+  border-radius: 18px 18px 4px 18px;
+  max-width: 70%;
+  box-shadow: 0 2px 6px rgba(21, 101, 192, 0.08);
+}
+
+/* Assistant message bubble */
+.bot-message {
+  background-color: #f5f5f5; /* Light gray for bot */
+  color: #333;
+  text-align: left;
+  margin: 8px auto 8px 0;
+  padding: 10px 16px;
+  border-radius: 18px 18px 18px 4px;
+  max-width: 70%;
+  box-shadow: 0 2px 6px rgba(51, 51, 51, 0.08);
+}
+
+/* Latest question highlight */
+.latest-question {
+  font-weight: bold;
+  background: #fffde7;
+  border-left: 4px solid #ffd600;
+  margin: 12px 0 4px 0;
+  padding: 8px 12px;
+  border-radius: 8px;
+  max-width: 70%;
 }
 
 /* visually hidden */
