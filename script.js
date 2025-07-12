@@ -3,12 +3,15 @@ const chatForm = document.getElementById("chatForm");
 const userInput = document.getElementById("userInput");
 const chatWindow = document.getElementById("chatWindow");
 
-// System prompt for the chatbot (see previous instructions)
+// System prompt for the chatbot
 const systemPrompt =
-  "You are a helpful assistant specializing in L’Oréal products, beauty routines, and recommendations. Only answer questions related to L’Oréal products, beauty routines, skincare, haircare, and beauty-related topics. If asked about anything unrelated to L’Oréal or beauty, politely respond that you can only assist with L’Oréal products, routines, and beauty advice.";
+  "You are a helpful assistant specializing in L’Oréal products, beauty routines, and recommendations. Only answer questions related to L’Oréal products, beauty routines, skincare, haircare, and beauty-related topics. If asked about anything unrelated to L’Oréal or beauty, politely respond that you can only assist with L’Oréal products, routines, and beauty advice. If you know the user's name, use it in your responses for a friendly experience.";
 
 // Store the chat history for context
 let messages = [{ role: "system", content: systemPrompt }];
+
+// Track if we know the user's name
+let userName = null;
 
 // Function to add a message to the chat window
 function addMessageToChat(role, text) {
@@ -22,7 +25,19 @@ function addMessageToChat(role, text) {
 }
 
 // Set initial message
-chatWindow.textContent = "👋 Hello! How can I help you today?";
+chatWindow.textContent = "👋 Hello! What's your name?";
+
+/* Helper function to extract username from user input */
+function extractUserName(text) {
+  // Check for patterns like "My name is Alice", "I'm Bob", "I am Carol"
+  const nameMatch = text.match(
+    /(?:my name is|i[' ]?m|i am)\s+([A-Za-zÀ-ÖØ-öø-ÿ'-]+)/i
+  );
+  if (nameMatch) {
+    return nameMatch[1];
+  }
+  return null;
+}
 
 /* Handle form submit */
 chatForm.addEventListener("submit", async function (event) {
@@ -31,8 +46,28 @@ chatForm.addEventListener("submit", async function (event) {
   const userText = userInput.value.trim();
   if (!userText) return;
 
-  // Show user's message
   addMessageToChat("user", userText);
+
+  // Try to extract username from input
+  if (!userName) {
+    const possibleName = extractUserName(userText);
+    if (possibleName) {
+      userName = possibleName;
+    } else {
+      userName = userText; // fallback: treat whole input as name
+    }
+    addMessageToChat(
+      "bot",
+      `Nice to meet you, ${userName}! How can I help you with L’Oréal products or routines today?`
+    );
+    messages.push({ role: "user", content: `My name is ${userName}.` });
+    messages.push({
+      role: "assistant",
+      content: `Nice to meet you, ${userName}! How can I help you with L’Oréal products or routines today?`,
+    });
+    userInput.value = "";
+    return;
+  }
 
   // Add user's message to history
   messages.push({ role: "user", content: userText });
