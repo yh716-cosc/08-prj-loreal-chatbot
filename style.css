@@ -30,6 +30,14 @@ body {
   margin-bottom: 10px;
 }
 
+/* logo */
+.logo-img {
+  display: block;           /* Makes the image a block element */
+  margin: 24px auto 12px;   /* Top, horizontal center, bottom spacing */
+  max-width: 180px;         /* Limits logo size for beginners */
+  padding: 0 12px;          /* Adds horizontal padding */
+}
+
 /* chat window */
 .chatbox {
   margin: 40px 0;
