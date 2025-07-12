@@ -15,13 +15,31 @@ let userName = null;
 
 // Function to add a message to the chat window
 function addMessageToChat(role, text) {
-  // Create a div for the message
   const messageDiv = document.createElement("div");
   messageDiv.className = role === "user" ? "user-message" : "bot-message";
-  messageDiv.textContent = text;
+  // For bot messages, format and convert newlines to <br>
+  if (role === "bot") {
+    const formatted = formatBotReply(text);
+    messageDiv.innerHTML = formatted.replace(/\n/g, "<br>");
+  } else {
+    messageDiv.textContent = text;
+  }
   chatWindow.appendChild(messageDiv);
-  // Scroll to the bottom so new messages are visible
   chatWindow.scrollTop = chatWindow.scrollHeight;
+}
+
+// Helper function to format bot responses for better readability
+function formatBotReply(text) {
+  // Add a new line before each bullet or number in a list
+  // Handles: - item, • item, 1. item, 2. item, etc.
+  let formatted = text
+    .replace(/(\n)?([•\-]\s)/g, "\n$2") // Bullets
+    .replace(/(\n)?(\d+\.\s)/g, "\n$2"); // Numbers
+
+  // Convert markdown **bold** to <b>bold</b>
+  formatted = formatted.replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
+
+  return formatted;
 }
 
 // Set initial message
@@ -95,17 +113,21 @@ chatForm.addEventListener("submit", async function (event) {
 
   // Prepare API request
   try {
-    const response = await fetch("https://api.openai.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${OPENAI_API_KEY}`, // from secrets.js
-      },
-      body: JSON.stringify({
-        model: "gpt-4o",
-        messages: messages,
-      }),
-    });
+    // Use Cloudflare Worker URL instead of OpenAI API
+    const response = await fetch(
+      "https://loreal-chatbot-worker.huangyx1113.workers.dev/",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          // No Authorization header needed for Cloudflare Worker
+        },
+        body: JSON.stringify({
+          model: "gpt-4o",
+          messages: messages,
+        }),
+      }
+    );
 
     const data = await response.json();
 
